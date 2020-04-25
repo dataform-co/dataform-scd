@@ -1,0 +1,35 @@
+config {
+  type: "view"
+}
+
+/*
+
+* Upon running this query, a table schema.table_name will be created in your warehouse, where schema is the Dataform schema defined in your dataform.json file and table_name is the name of this file
+
+* Learn more on https://docs.dataform.co/guides/datasets
+
+*/
+WITH example_dataset AS (
+  SELECT
+    user_id,
+    some_field,
+    updated_at
+  FROM
+    (
+      SELECT
+        1 as user_id,
+        'b' AS some_field,
+        date_add(current_date(), interval 1 day) AS updated_at
+    )
+  UNION ALL
+    (
+      SELECT
+        2 as user_id,
+        'a' AS some_field,
+        date_add(current_date(), interval 0 day) AS updated_at
+    )
+)
+SELECT
+  *
+FROM
+  example_dataset
