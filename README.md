@@ -1,4 +1,4 @@
-Common data models for creating (type-2 slowly changing dimensions tables)[https://en.wikipedia.org/wiki/Slowly_changing_dimension] from mutable data sources in (Dataform)[https://github.com/dataform-co/dataform].
+Common data models for creating [type-2 slowly changing dimensions tables](https://en.wikipedia.org/wiki/Slowly_changing_dimension) from mutable data sources in [Dataform](https://github.com/dataform-co/dataform).
 
 ## Supported warehouses
 
