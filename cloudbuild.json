@@ -1,0 +1,13 @@
+{
+  "steps": [
+    {
+      "name": "docker.io/node",
+      "entrypoint": "npm",
+      "args": ["install"]
+    },
+    {
+      "name": "docker.io/dataformco/dataform",
+      "args": ["compile"]
+    }
+  ]
+}

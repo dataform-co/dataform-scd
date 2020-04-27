@@ -2,13 +2,6 @@ config {
   type: "view"
 }
 
-/*
-
-* Upon running this query, a table schema.table_name will be created in your warehouse, where schema is the Dataform schema defined in your dataform.json file and table_name is the name of this file
-
-* Learn more on https://docs.dataform.co/guides/datasets
-
-*/
 WITH example_dataset AS (
   SELECT
     user_id,
