@@ -6,7 +6,7 @@
       "args": ["install"]
     },
     {
-      "name": "docker.io/dataformco/dataform",
+      "name": "docker.io/dataformco/dataform:1.6.2",
       "args": ["compile"]
     }
   ]
