@@ -3,12 +3,13 @@
  */
 module.exports = (
   name,
-  { uniqueKey, timestamp, source, tags, incrementalConfig }
+  { uniqueKey, timestamp, source, tags, incrementalConfig, columns = {} }
 ) => {
   // Create an incremental table with just pure updates, for a full history of the table.
   const updates = publish(`${name}_updates`, {
     type: "incremental",
     tags,
+    columns,
     ...incrementalConfig,
   }).query(
     (ctx) => `
@@ -25,6 +26,7 @@ module.exports = (
     type: "view",
     tags,
     columns: {
+      ...columns,
       scd_valid_from: `The timestamp from which this row is valid for the given ${uniqueKey}.`,
       scd_valid_to: `The timestamp until which this row is valid for the given ${uniqueKey}, or null if this it the latest value.`,
     },

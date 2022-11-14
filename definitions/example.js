@@ -15,6 +15,8 @@ const { updates, view } = scd("source_data_scd", {
   },
   // Any tags that will be added to actions.
   tags: ["slowly-changing-dimensions"],
+  // Optional documentation of table columns
+  columns: {user_id: "User ID", some_field: "Data Field", updated_at: "Timestamp for updates"},
   // Any configuration parameters to apply to the incremental table that will be created.
   incrementalConfig: {
     bigquery: {
