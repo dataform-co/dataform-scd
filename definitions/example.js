@@ -2,7 +2,7 @@ const scd = require("dataform-scd");
 /**
  * Create an SCD table on top of the fake table defined in source_data.sqlx.
  */
-const { updates, view } = scd("customer_scd", {
+const { updates, view } = scd("source_data_scd", {
   // A unique identifier for rows in the table.
   uniqueKey: "user_id",
   // A field that stores a timestamp or date of when the row was last changed.
