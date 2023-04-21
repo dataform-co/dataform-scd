@@ -1,4 +1,5 @@
-const scd = require("dataform-scd");
+const scd = require("../index");
+
 /**
  * Create an SCD table on top of the fake table defined in source_data.sqlx.
  */
