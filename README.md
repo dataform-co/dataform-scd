@@ -25,7 +25,9 @@ scd("source_data_scd", {
   // A field that stores a timestamp or date of when the row was last changed.
   timestamp: "updated_at",
   // The source table to build slowly changing dimensions from.
-  source: {
+    hash: "hash_value",
+    // A field that stores the hash value of the fields that we want to track changes in
+    source: {
     schema: "dataform_scd_example",
     name: "source_data",
   },

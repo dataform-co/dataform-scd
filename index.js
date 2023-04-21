@@ -2,8 +2,8 @@
  * Builds a type-2 slowly changing dimensions table and view.
  */
 module.exports = (
-  name,
-  { uniqueKey, timestamp, source, tags, incrementalConfig, columns = {} }
+    name,
+    { uniqueKey, hash, timestamp, source, tags, incrementalConfig, columns = {} }
 ) => {
   // Create an incremental table with just pure updates, for a full history of the table.
   const updates = publish(`${name}_updates`, {
@@ -12,11 +12,18 @@ module.exports = (
     columns,
     ...incrementalConfig,
   }).query(
-    (ctx) => `
+      (ctx) => `
+    ${ctx.when(
+          ctx.incremental(), `with ids_to_update as \
+        (select ${uniqueKey}, ${hash}  from ${ctx.ref(source)}\
+        except distinct \
+        (select ${uniqueKey}, ${hash} from ${ctx.self()}))`
+      )}
       select * from ${ctx.ref(source)}
       ${ctx.when(
-        ctx.incremental(),
-        `where ${timestamp} > (select max(${timestamp}) from ${ctx.self()})`
+          ctx.incremental(),
+          `where ${timestamp} > (select max(${timestamp}) from ${ctx.self()})
+        and ${uniqueKey} in (select ${uniqueKey} from ids_to_update)`
       )}
 `
   );
@@ -31,7 +38,7 @@ module.exports = (
       scd_valid_to: `The timestamp until which this row is valid for the given ${uniqueKey}, or null if this it the latest value.`,
     },
   }).query(
-    (ctx) => `
+      (ctx) => `
   select
     *,
     ${timestamp} as scd_valid_from,
