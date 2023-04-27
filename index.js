@@ -12,7 +12,8 @@ module.exports = (
     columns,
     ...incrementalConfig,
   }).query(
-      (ctx) => `
+    !!hash ?
+       (ctx) => `
     ${ctx.when(
           ctx.incremental(), `with ids_to_update as \
         (select ${uniqueKey}, ${hash}  from ${ctx.ref(source)}\
@@ -24,9 +25,16 @@ module.exports = (
           ctx.incremental(),
           `where ${timestamp} > (select max(${timestamp}) from ${ctx.self()})
         and ${uniqueKey} in (select ${uniqueKey} from ids_to_update)`
-      )}
-`
+      )}`
+    :
+  (ctx) => `
+      select * from ${ctx.ref(source)}
+      ${ctx.when(
+        ctx.incremental(),
+        `where ${timestamp} > (select max(${timestamp}) from ${ctx.self()})`
+      )}`
   );
+
 
   // Create a view on top of the raw updates table that contains computed valid_from and valid_to fields.
   const view = publish(name, {
