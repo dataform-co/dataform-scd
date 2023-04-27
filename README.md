@@ -24,9 +24,9 @@ scd("source_data_scd", {
   uniqueKey: "user_id",
   // A field that stores a timestamp or date of when the row was last changed.
   timestamp: "updated_at",
-  // The source table to build slowly changing dimensions from.
-    hash: "hash_value", // OPTIONAL
     // A field that stores the hash value of the fields that we want to track changes in. If you do not want to use the hash comparison, you may omit this field or set it to null
+    hash: "hash_value", // OPTIONAL
+    // The source table to build slowly changing dimensions from.
     source: {
       schema: "dataform_scd_example",
       name: "source_data",
