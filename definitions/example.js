@@ -8,7 +8,7 @@ const { updates, view } = scd("source_data_scd", {
   uniqueKey: "user_id",
   // A field that stores a timestamp or date of when the row was last changed.
   timestamp: "updated_at",
-  // A field that stores the hash value of the fields that we want to track changes in
+  // A field that stores the hash value of the fields that we want to track changes in. If you do not want to use the hash comparison, you may omit this field or set it to null
   hash: "hash_value",
   // The source table to build slowly changing dimensions from.
   source: {
@@ -29,5 +29,7 @@ const { updates, view } = scd("source_data_scd", {
 
 // Additional customization of the created models can be done by using the returned actions objects.
 updates.config({
+  // You can specify the output schema here if it is different than the default
+  schema: "dataform_scd_example",
   description: "Updates table for SCD",
 });
