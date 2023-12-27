@@ -1,6 +1,6 @@
 {
     "defaultSchema": "dataform_scd_example",
-    "assertionSchema": "dataform_assertions",
     "warehouse": "bigquery",
-    "defaultDatabase": "tada-analytics"
+    "defaultDatabase": "tada-analytics",
+    "defaultLocation": "us"
 }
