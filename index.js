@@ -52,7 +52,7 @@ module.exports = (
     ${timestamp} as scd_valid_from,
     lead(${timestamp}) over (partition by ${uniqueKey} order by ${timestamp} asc) as scd_valid_to
   from
-    ${ctx.ref(`${name}_updates`)}
+    ${ctx.ref(updates.proto.target.schema, `${name}_updates`)}
   `
   );
 
