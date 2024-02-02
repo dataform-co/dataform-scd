@@ -18,7 +18,9 @@ module.exports = (
           ctx.incremental(), `with ids_to_update as \
         (select ${uniqueKey}, ${hash}  from ${ctx.ref(source)}\
         except distinct \
-        (select ${uniqueKey}, any_value(${hash} having max ${timestamp})\
+        (select distinct ${uniqueKey}, first_value(${hash})\
+          over(${uniqueKey} order by ${timestamp} desc\
+            rows between unbounded preceding and unbounded following)\
         from ${ctx.self()} group by ${uniqueKey}))`
       )}
       select * from ${ctx.ref(source)}
